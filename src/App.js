@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import { useState } from "react";
+import SelectPokedex from "./SelectPokedex";
+import SelectPokemon from "./SelectPokemon";
+import PokemonDetail from "./PokemonDetail";
 import './App.css';
+export default function App() {
+  const [pokedexName, setPokedexName] = useState(null);
+  const [pokemonName, setPokemonName] = useState(null);
 
-function App() {
+  function goHome() {
+    setPokemonName(null);
+    setPokedexName(null);
+  }
+  if (pokedexName === null) {
+    return <SelectPokedex onSelection={(name) => setPokedexName(name)} />
+  }
+
+   if (pokemonName === null) {
+     return <SelectPokemon onSelection={(name) => setPokemonName(name)}  pokedex={pokedexName} />
+   }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <PokemonDetail pokemonName = {pokemonName} goHome = {goHome} goBack ={()=>{
+      setPokemonName(null);
+    }} />
+  )
 }
-
-export default App;
